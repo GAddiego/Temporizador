@@ -1,24 +1,31 @@
 package control;
 
+import GUI.NewJFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Control {
 
     int hours;
     int minutes;
+    private Timer timer;
+    private boolean countingDown = false;
+    private NewJFrame newJFrame;
 
-    public Control() {
+    public Control(NewJFrame newJFrame) {
 
         LocalDateTime localDate = LocalDateTime.now();
         hours = localDate.getHour();
         minutes = localDate.getMinute();
         System.out.println("hora: " + hours);
         System.out.println("minutos: " + minutes);
+        this.newJFrame = newJFrame;
     }
 
     public long calculateSeconds(int hour, int minute) {
@@ -60,6 +67,7 @@ public class Control {
             // Imprime el código de salida del proceso
             System.out.println("Código de salida: " + exitCode);
             if (exitCode == 0) {
+                if(!countingDown)startCountDown(delay);
                 return true;
             }
 
@@ -91,6 +99,7 @@ public class Control {
 
             // Imprime el código de salida del proceso
             System.out.println("Código de salida: " + exitCode);
+            if(!countingDown)startCountDown(delay);
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -144,6 +153,7 @@ public class Control {
 
             // Espera a que el proceso termine
             int exitCode = proceso.waitFor();
+            if(countingDown)stopCountDown();
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -151,27 +161,42 @@ public class Control {
 
     }
 
-    private void startCountDown(int delay) {
-
-        Timer timer;
-
-        // Crea un temporizador que se ejecutará cada segundo
-        timer = new Timer(1000, new ActionListener() {
+    private void startCountDown(long delay) {
+        
+        TimerTask timerTask = new TimerTask() {
+            long dly = delay;
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Actualiza el valor del campo de texto
-                int dly = delay;
-                // Disminuye el contador
-                dly--;
-
+            public void run() {
+                if(dly>0){
+                    String timeFormated = formatTime(dly);
+                    System.out.println(dly);
+                    newJFrame.setTimer(timeFormated);
+                    dly--;
+                }
             }
-        });
-
-        // Inicia el temporizador
-        timer.start();
-
+        };
+        
+        timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+        countingDown = true;
+    }
+    
+    private void stopCountDown(){
+        timer.cancel();
+        countingDown = false;
     }
 
+    private String formatTime(long dly){
+        
+        Duration duration = Duration.ofSeconds(dly);
+
+        long hoursRemaining = duration.toHours();
+        long minutesRemaining = duration.toMinutesPart();
+        long secondsRemaining = duration.toSecondsPart();
+
+        return String.format("%02d:%02d:%02d", hoursRemaining, minutesRemaining, secondsRemaining);
+    }
+    
     public int getHours() {
         return hours;
     }

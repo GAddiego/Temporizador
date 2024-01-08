@@ -27,7 +27,7 @@ public class NewJFrame extends javax.swing.JFrame {
         buttonGroupLanguages.add(jRadioButtonSpanish);
         buttonGroupLanguages.add(jRadioButtonEnglish);
         changeLanguage(SPANISH);
-        control = new Control();
+        control = new Control(this);
 
         jTextFieldHour.setText(String.valueOf(control.getHours()));
         jTextFieldMinute.setText(String.valueOf(control.getMinutes()));
@@ -131,10 +131,13 @@ public class NewJFrame extends javax.swing.JFrame {
         });
         background.add(jButtonPlus5Minutes, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 60, -1));
 
+        jTextFieldRemainingTime.setEditable(false);
         jTextFieldRemainingTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldRemainingTime.setText("tiempo restante");
         jTextFieldRemainingTime.setEnabled(false);
-        background.add(jTextFieldRemainingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, -1, -1));
+        jTextFieldRemainingTime.setMaximumSize(new java.awt.Dimension(97, 22));
+        jTextFieldRemainingTime.setMinimumSize(new java.awt.Dimension(97, 22));
+        background.add(jTextFieldRemainingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 140, -1));
 
         jLabelRemainingTime.setText("Tiempo restante:");
         background.add(jLabelRemainingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
@@ -153,7 +156,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButtonShutdownActionPerformed(evt);
             }
         });
-        background.add(jButtonShutdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        background.add(jButtonShutdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
 
         jButtonReset.setText("Reiniciar");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +164,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 jButtonResetActionPerformed(evt);
             }
         });
-        background.add(jButtonReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
+        background.add(jButtonReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
 
         jRadioButtonSpanish.setSelected(true);
         jRadioButtonSpanish.setText("Español");
@@ -402,6 +405,7 @@ public class NewJFrame extends javax.swing.JFrame {
         long secondsRemaining = control.calculateSeconds(hour, minute);
         
         control.shutDown(secondsRemaining, forced);
+        jTextFieldRemainingTime.setEnabled(true);
     }//GEN-LAST:event_jButtonShutdownActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
@@ -413,11 +417,17 @@ public class NewJFrame extends javax.swing.JFrame {
         long secondsRemaining = control.calculateSeconds(hour, minute);
         
         control.reset(secondsRemaining, forced);
+        jTextFieldRemainingTime.setEnabled(true);
         
     }//GEN-LAST:event_jButtonResetActionPerformed
 
+    public void setTimer(String remainingTime){
+        jTextFieldRemainingTime.setText(remainingTime);
+    }
+    
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         control.cancelShutDown();
+        jTextFieldRemainingTime.setEnabled(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     /**
