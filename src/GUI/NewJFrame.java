@@ -4,12 +4,25 @@
  */
 package GUI;
 
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 import control.Control;
 import control.Checker;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.plaf.multi.MultiLookAndFeel;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import language.Language;
 
 /**
@@ -20,10 +33,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
     Control control;
     boolean forced;
-    
 
     public NewJFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         buttonGroupLanguages.add(jRadioButtonSpanish);
         buttonGroupLanguages.add(jRadioButtonEnglish);
         changeLanguage(SPANISH);
@@ -32,6 +45,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextFieldHour.setText(String.valueOf(control.getHours()));
         jTextFieldMinute.setText(String.valueOf(control.getMinutes()));
         jTextFieldRemainingTime.setText("--:--");
+
+        setJTexFieldChanged(jTextFieldMinute);
 
 //        //Adding the verifiers, user can only write integers in the textfields
 //        jTextFieldHour.setInputVerifier(new Checker());
@@ -46,39 +61,254 @@ public class NewJFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroupLanguages = new javax.swing.ButtonGroup();
-        background = new javax.swing.JPanel();
+        jScrollBar1 = new javax.swing.JScrollBar();
+        jPanelPrincipal = new javax.swing.JPanel();
+        jPanelTitle = new javax.swing.JPanel();
         jLabelTitle = new javax.swing.JLabel();
-        jTextFieldHour = new javax.swing.JTextField();
-        jTextFieldMinute = new javax.swing.JTextField();
-        jLabelHour = new javax.swing.JLabel();
-        jLabelMinute = new javax.swing.JLabel();
-        jCheckBoxForzar = new javax.swing.JCheckBox();
-        jButtonPlus10Minutes = new javax.swing.JButton();
-        jButtonPlus5Minutes = new javax.swing.JButton();
-        jTextFieldRemainingTime = new javax.swing.JTextField();
-        jLabelRemainingTime = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanelButtons = new javax.swing.JPanel();
         jButtonCancel = new javax.swing.JButton();
         jButtonShutdown = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
-        jRadioButtonSpanish = new javax.swing.JRadioButton();
-        jRadioButtonEnglish = new javax.swing.JRadioButton();
+        jPanelLanguage = new javax.swing.JPanel();
         jLabelLanguage = new javax.swing.JLabel();
-        jButtonCurrentTime = new javax.swing.JButton();
+        jRadioButtonEnglish = new javax.swing.JRadioButton();
+        jRadioButtonSpanish = new javax.swing.JRadioButton();
+        jPanelTimeNow = new javax.swing.JPanel();
+        jLabelMinute = new javax.swing.JLabel();
+        jButtonPlus10Minutes = new javax.swing.JButton();
+        jButtonPlus5Minutes = new javax.swing.JButton();
         jButtonPlusOneMinute = new javax.swing.JButton();
+        jTextFieldMinute = new javax.swing.JTextField();
         jButtonLessOneMinute = new javax.swing.JButton();
+        jButtonCurrentTime = new javax.swing.JButton();
         jButtonLessOneHour = new javax.swing.JButton();
         jButtonPlusOneHour = new javax.swing.JButton();
+        jLabelHour = new javax.swing.JLabel();
+        jTextFieldHour = new javax.swing.JTextField();
+        jLabelRemainingTime = new javax.swing.JLabel();
+        jTextFieldRemainingTime = new javax.swing.JTextField();
+        jCheckBoxForzar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(500, 320));
+        setMinimumSize(new java.awt.Dimension(500, 320));
+        setPreferredSize(new java.awt.Dimension(500, 320));
+        setResizable(false);
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        background.setBackground(new java.awt.Color(255, 153, 255));
-        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelPrincipal.setMaximumSize(getPreferredSize());
+        jPanelPrincipal.setMinimumSize(getPreferredSize());
+        jPanelPrincipal.setOpaque(false);
+        jPanelPrincipal.setPreferredSize(getPreferredSize());
+        jPanelPrincipal.setLayout(new java.awt.GridBagLayout());
+
+        jPanelTitle.setMaximumSize(new java.awt.Dimension(690, 465));
+        jPanelTitle.setLayout(new javax.swing.BoxLayout(jPanelTitle, javax.swing.BoxLayout.Y_AXIS));
 
         jLabelTitle.setText("Titulo");
-        background.add(jLabelTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanelTitle.add(jLabelTitle);
+        jPanelTitle.add(jSeparator1);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 17, 0);
+        jPanelPrincipal.add(jPanelTitle, gridBagConstraints);
+
+        jPanelButtons.setMaximumSize(new java.awt.Dimension(690, 465));
+        jPanelButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
+
+        jButtonCancel.setText("Cancelar");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(jButtonCancel);
+
+        jButtonShutdown.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonShutdown.setText("Apagar");
+        jButtonShutdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShutdownActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(jButtonShutdown);
+
+        jButtonReset.setText("Reiniciar");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(jButtonReset);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        jPanelPrincipal.add(jPanelButtons, gridBagConstraints);
+
+        jPanelLanguage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        jPanelLanguage.setLayout(new javax.swing.BoxLayout(jPanelLanguage, javax.swing.BoxLayout.Y_AXIS));
+
+        jLabelLanguage.setText("Idioma:");
+        jPanelLanguage.add(jLabelLanguage);
+
+        jRadioButtonEnglish.setText("Inglés");
+        jRadioButtonEnglish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonEnglishActionPerformed(evt);
+            }
+        });
+        jPanelLanguage.add(jRadioButtonEnglish);
+
+        jRadioButtonSpanish.setSelected(true);
+        jRadioButtonSpanish.setText("Español");
+        jRadioButtonSpanish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonSpanishActionPerformed(evt);
+            }
+        });
+        jPanelLanguage.add(jRadioButtonSpanish);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.insets = new java.awt.Insets(0, 19, 0, 12);
+        jPanelPrincipal.add(jPanelLanguage, gridBagConstraints);
+
+        jPanelTimeNow.setMaximumSize(new java.awt.Dimension(690, 465));
+        jPanelTimeNow.setOpaque(false);
+        jPanelTimeNow.setLayout(new java.awt.GridBagLayout());
+
+        jLabelMinute.setText("Minute");
+        jLabelMinute.setMaximumSize(new java.awt.Dimension(36, 16));
+        jLabelMinute.setMinimumSize(new java.awt.Dimension(36, 16));
+        jLabelMinute.setPreferredSize(new java.awt.Dimension(42, 16));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 8);
+        jPanelTimeNow.add(jLabelMinute, gridBagConstraints);
+
+        jButtonPlus10Minutes.setText("+10");
+        jButtonPlus10Minutes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPlus10MinutesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
+        jPanelTimeNow.add(jButtonPlus10Minutes, gridBagConstraints);
+
+        jButtonPlus5Minutes.setText("+5");
+        jButtonPlus5Minutes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPlus5MinutesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
+        jPanelTimeNow.add(jButtonPlus5Minutes, gridBagConstraints);
+
+        jButtonPlusOneMinute.setText("+");
+        jButtonPlusOneMinute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPlusOneMinuteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanelTimeNow.add(jButtonPlusOneMinute, gridBagConstraints);
+
+        jTextFieldMinute.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldMinute.setText("jTextField1");
+        jTextFieldMinute.setMaximumSize(new java.awt.Dimension(70, 22));
+        jTextFieldMinute.setMinimumSize(new java.awt.Dimension(70, 22));
+        jTextFieldMinute.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldMinuteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldMinuteFocusLost(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanelTimeNow.add(jTextFieldMinute, gridBagConstraints);
+
+        jButtonLessOneMinute.setText("-");
+        jButtonLessOneMinute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLessOneMinuteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanelTimeNow.add(jButtonLessOneMinute, gridBagConstraints);
+
+        jButtonCurrentTime.setText("Hora actual");
+        jButtonCurrentTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCurrentTimeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 7, 0);
+        jPanelTimeNow.add(jButtonCurrentTime, gridBagConstraints);
+
+        jButtonLessOneHour.setText("-");
+        jButtonLessOneHour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLessOneHourActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanelTimeNow.add(jButtonLessOneHour, gridBagConstraints);
+
+        jButtonPlusOneHour.setText("+");
+        jButtonPlusOneHour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPlusOneHourActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanelTimeNow.add(jButtonPlusOneHour, gridBagConstraints);
+
+        jLabelHour.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelHour.setText("Hora");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 8);
+        jPanelTimeNow.add(jLabelHour, gridBagConstraints);
+
+        jTextFieldHour.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldHour.setText("jTextField1");
         jTextFieldHour.setMaximumSize(new java.awt.Dimension(70, 22));
         jTextFieldHour.setMinimumSize(new java.awt.Dimension(70, 22));
@@ -91,45 +321,19 @@ public class NewJFrame extends javax.swing.JFrame {
                 jTextFieldHourFocusLost(evt);
             }
         });
-        background.add(jTextFieldHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 50, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanelTimeNow.add(jTextFieldHour, gridBagConstraints);
 
-        jTextFieldMinute.setText("jTextField1");
-        jTextFieldMinute.setMaximumSize(new java.awt.Dimension(70, 22));
-        jTextFieldMinute.setMinimumSize(new java.awt.Dimension(70, 22));
-        jTextFieldMinute.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldMinuteFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldMinuteFocusLost(evt);
-            }
-        });
-        background.add(jTextFieldMinute, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 80, -1));
-
-        jLabelHour.setText("Hora");
-        background.add(jLabelHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        jLabelMinute.setText("Minute");
-        background.add(jLabelMinute, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, -1, -1));
-
-        jCheckBoxForzar.setText("Forzar");
-        background.add(jCheckBoxForzar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, -1, -1));
-
-        jButtonPlus10Minutes.setText("+10");
-        jButtonPlus10Minutes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPlus10MinutesActionPerformed(evt);
-            }
-        });
-        background.add(jButtonPlus10Minutes, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 60, -1));
-
-        jButtonPlus5Minutes.setText("+5");
-        jButtonPlus5Minutes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPlus5MinutesActionPerformed(evt);
-            }
-        });
-        background.add(jButtonPlus5Minutes, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 60, -1));
+        jLabelRemainingTime.setText("Tiempo restante:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(16, 0, 8, 8);
+        jPanelTimeNow.add(jLabelRemainingTime, gridBagConstraints);
 
         jTextFieldRemainingTime.setEditable(false);
         jTextFieldRemainingTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -137,108 +341,28 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextFieldRemainingTime.setEnabled(false);
         jTextFieldRemainingTime.setMaximumSize(new java.awt.Dimension(97, 22));
         jTextFieldRemainingTime.setMinimumSize(new java.awt.Dimension(97, 22));
-        background.add(jTextFieldRemainingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 140, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 2;
+        gridBagConstraints.insets = new java.awt.Insets(16, 0, 8, 0);
+        jPanelTimeNow.add(jTextFieldRemainingTime, gridBagConstraints);
 
-        jLabelRemainingTime.setText("Tiempo restante:");
-        background.add(jLabelRemainingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jCheckBoxForzar.setText("Forzar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 8);
+        jPanelTimeNow.add(jCheckBoxForzar, gridBagConstraints);
 
-        jButtonCancel.setText("Cancelar");
-        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelActionPerformed(evt);
-            }
-        });
-        background.add(jButtonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanelPrincipal.add(jPanelTimeNow, gridBagConstraints);
 
-        jButtonShutdown.setText("Apagar");
-        jButtonShutdown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShutdownActionPerformed(evt);
-            }
-        });
-        background.add(jButtonShutdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
-
-        jButtonReset.setText("Reiniciar");
-        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonResetActionPerformed(evt);
-            }
-        });
-        background.add(jButtonReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
-
-        jRadioButtonSpanish.setSelected(true);
-        jRadioButtonSpanish.setText("Español");
-        jRadioButtonSpanish.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonSpanishActionPerformed(evt);
-            }
-        });
-        background.add(jRadioButtonSpanish, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
-
-        jRadioButtonEnglish.setText("Inglés");
-        jRadioButtonEnglish.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonEnglishActionPerformed(evt);
-            }
-        });
-        background.add(jRadioButtonEnglish, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
-
-        jLabelLanguage.setText("Idioma:");
-        background.add(jLabelLanguage, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
-
-        jButtonCurrentTime.setText("Hora actual");
-        jButtonCurrentTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCurrentTimeActionPerformed(evt);
-            }
-        });
-        background.add(jButtonCurrentTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
-
-        jButtonPlusOneMinute.setText("+");
-        jButtonPlusOneMinute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPlusOneMinuteActionPerformed(evt);
-            }
-        });
-        background.add(jButtonPlusOneMinute, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
-
-        jButtonLessOneMinute.setText("-");
-        jButtonLessOneMinute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLessOneMinuteActionPerformed(evt);
-            }
-        });
-        background.add(jButtonLessOneMinute, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
-
-        jButtonLessOneHour.setText("-");
-        jButtonLessOneHour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLessOneHourActionPerformed(evt);
-            }
-        });
-        background.add(jButtonLessOneHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
-
-        jButtonPlusOneHour.setText("+");
-        jButtonPlusOneHour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPlusOneHourActionPerformed(evt);
-            }
-        });
-        background.add(jButtonPlusOneHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, -1, -1));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanelPrincipal);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -331,100 +455,143 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButtonPlusOneMinuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlusOneMinuteActionPerformed
         int minute = Integer.parseInt(jTextFieldMinute.getText());
-        
-        if(minute==59){
+
+        if (minute == 59) {
             jTextFieldMinute.setText("0");
             int hour = Integer.parseInt(jTextFieldHour.getText());
-            jTextFieldHour.setText(String.valueOf(hour+1));
-        }else{
-            jTextFieldMinute.setText(String.valueOf(minute+1));
+            jTextFieldHour.setText(String.valueOf(hour + 1));
+        } else {
+            jTextFieldMinute.setText(String.valueOf(minute + 1));
         }
+
+
     }//GEN-LAST:event_jButtonPlusOneMinuteActionPerformed
+
+    private void setJTexFieldChanged(JTextField txt) {
+        DocumentListener documentListener = new DocumentListener() {
+
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                System.out.println("insertUpdate");
+                SwingUtilities.invokeLater(() -> txtEjemploJTextFieldChanged(txt, this));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+            }
+        };
+        txt.getDocument().addDocumentListener(documentListener);
+
+    }
+
+    private void txtEjemploJTextFieldChanged(JTextField txt, DocumentListener documentListener) {
+
+        txt.getDocument().removeDocumentListener(documentListener);
+
+        String minuteString = jTextFieldMinute.getText();
+        int minuteInt = -1;
+        try {
+            minuteInt = Integer.parseInt(minuteString);
+
+        } catch (Exception e) {
+        }
+        if (minuteInt >= 0 && minuteInt <= 9) {
+            minuteString = String.format("%02d", minuteInt);
+            jTextFieldMinute.setText(minuteString);
+        }
+
+        txt.getDocument().addDocumentListener(documentListener);
+    }
+
 
     private void jButtonLessOneMinuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLessOneMinuteActionPerformed
         int minute = Integer.parseInt(jTextFieldMinute.getText());
-        if(minute==0){
+        if (minute == 0) {
             jTextFieldMinute.setText("59");
             int hour = Integer.parseInt(jTextFieldHour.getText());
-            jTextFieldHour.setText(String.valueOf(hour-1));
-        }else{
-            jTextFieldMinute.setText(String.valueOf(minute-1));
+            jTextFieldHour.setText(String.valueOf(hour - 1));
+        } else {
+            jTextFieldMinute.setText(String.valueOf(minute - 1));
         }
     }//GEN-LAST:event_jButtonLessOneMinuteActionPerformed
 
     private void jButtonLessOneHourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLessOneHourActionPerformed
         int hour = Integer.parseInt(jTextFieldHour.getText());
-        if(hour==0){
+        if (hour == 0) {
             jTextFieldHour.setText("23");
-        }else{
-            jTextFieldHour.setText(String.valueOf(hour-1));
+        } else {
+            jTextFieldHour.setText(String.valueOf(hour - 1));
         }
     }//GEN-LAST:event_jButtonLessOneHourActionPerformed
 
     private void jButtonPlusOneHourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlusOneHourActionPerformed
         int hour = Integer.parseInt(jTextFieldHour.getText());
-        if(hour==23 ){
+        if (hour == 23) {
             jTextFieldHour.setText("0");
-        }else{
-            jTextFieldHour.setText(String.valueOf(hour+1));
+        } else {
+            jTextFieldHour.setText(String.valueOf(hour + 1));
         }
     }//GEN-LAST:event_jButtonPlusOneHourActionPerformed
 
     private void jButtonPlus5MinutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlus5MinutesActionPerformed
         int minute = Integer.parseInt(jTextFieldMinute.getText());
-        int newMinute = minute+5;
-        if(newMinute>59){
-            newMinute=newMinute-60;
+        int newMinute = minute + 5;
+        if (newMinute > 59) {
+            newMinute = newMinute - 60;
             jTextFieldMinute.setText(String.valueOf(newMinute));
             int hour = Integer.parseInt(jTextFieldHour.getText());
-            jTextFieldHour.setText(String.valueOf(hour+1));
-        }else{
+            jTextFieldHour.setText(String.valueOf(hour + 1));
+        } else {
             jTextFieldMinute.setText(String.valueOf(newMinute));
         }
     }//GEN-LAST:event_jButtonPlus5MinutesActionPerformed
 
     private void jButtonPlus10MinutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlus10MinutesActionPerformed
         int minute = Integer.parseInt(jTextFieldMinute.getText());
-        int newMinute = minute+10;
-        if(newMinute>59){
-            newMinute=newMinute-60;
+        int newMinute = minute + 10;
+        if (newMinute > 59) {
+            newMinute = newMinute - 60;
             jTextFieldMinute.setText(String.valueOf(newMinute));
             int hour = Integer.parseInt(jTextFieldHour.getText());
-            jTextFieldHour.setText(String.valueOf(hour+1));
-        }else{
+            jTextFieldHour.setText(String.valueOf(hour + 1));
+        } else {
             jTextFieldMinute.setText(String.valueOf(newMinute));
         }
     }//GEN-LAST:event_jButtonPlus10MinutesActionPerformed
 
     private void jButtonShutdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShutdownActionPerformed
-        
+
         forced = jCheckBoxForzar.isSelected();
-        
+
         int hour = Integer.parseInt(jTextFieldHour.getText());
         int minute = Integer.parseInt(jTextFieldMinute.getText());
         long secondsRemaining = control.calculateSeconds(hour, minute);
-        
+
         control.shutDown(secondsRemaining, forced);
         jTextFieldRemainingTime.setEnabled(true);
     }//GEN-LAST:event_jButtonShutdownActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
-        
+
         forced = jCheckBoxForzar.isSelected();
-        
+
         int hour = Integer.parseInt(jTextFieldHour.getText());
         int minute = Integer.parseInt(jTextFieldMinute.getText());
         long secondsRemaining = control.calculateSeconds(hour, minute);
-        
+
         control.reset(secondsRemaining, forced);
         jTextFieldRemainingTime.setEnabled(true);
-        
+
     }//GEN-LAST:event_jButtonResetActionPerformed
 
-    public void setTimer(String remainingTime){
+    public void setTimer(String remainingTime) {
         jTextFieldRemainingTime.setText(remainingTime);
     }
-    
+
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         control.cancelShutDown();
         jTextFieldRemainingTime.setEnabled(false);
@@ -460,6 +627,12 @@ public class NewJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+//                try {
+//                    UIManager.setLookAndFeel(new HiFiLookAndFeel());
+//                } catch (UnsupportedLookAndFeelException ex) {
+//                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 new NewJFrame().setVisible(true);
             }
         });
@@ -487,7 +660,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private final String ENGLISH = "english";
     private final String SPANISH = "spanish";
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel background;
     private javax.swing.ButtonGroup buttonGroupLanguages;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonCurrentTime;
@@ -505,8 +677,15 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelMinute;
     private javax.swing.JLabel jLabelRemainingTime;
     private javax.swing.JLabel jLabelTitle;
+    private javax.swing.JPanel jPanelButtons;
+    private javax.swing.JPanel jPanelLanguage;
+    private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel jPanelTimeNow;
+    private javax.swing.JPanel jPanelTitle;
     private javax.swing.JRadioButton jRadioButtonEnglish;
     private javax.swing.JRadioButton jRadioButtonSpanish;
+    private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldHour;
     private javax.swing.JTextField jTextFieldMinute;
     private javax.swing.JTextField jTextFieldRemainingTime;

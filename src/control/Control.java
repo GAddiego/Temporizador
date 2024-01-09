@@ -153,7 +153,10 @@ public class Control {
 
             // Espera a que el proceso termine
             int exitCode = proceso.waitFor();
-            if(countingDown)stopCountDown();
+            if(countingDown){
+                stopCountDown();
+                newJFrame.setTimer("--:--");
+            }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
